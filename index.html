@@ -6,18 +6,16 @@
     <title>FaceLife+ Gen-AI Pro Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .hidden { display: none !important; }
         .custom-scroll::-webkit-scrollbar { width: 5px; }
         .custom-scroll::-webkit-scrollbar-track { background: #0b1329; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #1c2541; border-radius: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #3a506b; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans p-4 md:p-6">
 
     <div class="max-w-[1440px] mx-auto space-y-6">
         
-        <!-- HEADER -->
         <header class="flex justify-between items-start bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl">
             <div class="space-y-2">
                 <div class="flex items-center space-x-3">
@@ -27,16 +25,14 @@
                 <p class="text-xs md:text-sm text-emerald-400 font-medium">Tempat untuk ekspresikan hidupmu - design foto - edit video - Tawarkan produkmu - FaceLie AI Generator</p>
             </div>
             <div class="border border-slate-700 p-3 rounded bg-slate-950 flex flex-col space-y-1.5 text-xs font-bold min-w-[90px] text-center shadow-md">
-                <a href="#" class="text-emerald-400 hover:text-emerald-300 transition tracking-wide">sign up</a>
+                <a href="#" class="text-emerald-400">sign up</a>
                 <div class="border-t border-slate-800 my-1"></div>
-                <a href="#" class="text-rose-500 hover:text-rose-400 transition tracking-wide">sign in</a>
+                <a href="#" class="text-rose-500">sign in</a>
             </div>
         </header>
 
-        <!-- DASHBOARD GRID -->
         <main class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
             
-            <!-- AI GENERATOR -->
             <div class="lg:col-span-1 bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl min-h-[580px]">
                 <h2 class="text-sm font-bold text-indigo-400 border-b border-slate-800 pb-2 uppercase tracking-wider">AI Generator</h2>
                 <textarea id="prompt-box" rows="4" class="w-full mt-4 bg-slate-950 border border-slate-800 rounded p-2.5 text-xs text-slate-200" placeholder="Masukkan prompt..."></textarea>
@@ -47,20 +43,20 @@
                 </div>
             </div>
 
-            <!-- FEED -->
             <div class="lg:col-span-2 bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl space-y-4">
-                <h2 class="text-sm font-bold text-sky-400 border-b border-slate-800 pb-2 uppercase tracking-wider">Feed sosial media</h2>
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wider">Feed Sosial Media</h2>
+                    <input type="file" id="fileInput" class="hidden" accept="image/*,video/*" onchange="uploadMedia(this)">
+                    <button onclick="document.getElementById('fileInput').click()" class="bg-sky-600 text-[10px] px-3 py-1 rounded font-bold hover:bg-sky-500">+ Upload</button>
+                </div>
                 <div id="feed-container" class="space-y-4 max-h-[620px] overflow-y-auto pr-1 custom-scroll"></div>
             </div>
 
-            <!-- MARKETPLACE & EDITOR -->
             <div class="lg:col-span-1 space-y-6">
-                <!-- Marketplace -->
                 <div class="bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl">
                     <h2 class="text-sm font-bold text-emerald-400 border-b border-slate-800 pb-2 uppercase tracking-wider">Market Place</h2>
                     <div id="market-container" class="space-y-4 mt-4"></div>
                 </div>
-                <!-- Editor Panel -->
                 <div class="bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl">
                     <h2 class="text-sm font-bold text-amber-400 border-b border-slate-800 pb-2 uppercase tracking-wider">Editor Panel</h2>
                     <button onclick="runTool('Editor Foto Profesional')" class="w-full mt-4 bg-slate-950 border border-slate-800 text-slate-200 py-2 rounded text-xs font-bold hover:bg-slate-800 transition">⚡ Editor Foto</button>
@@ -70,64 +66,70 @@
         </main>
     </div>
 
-    <!-- Modal Checkout -->
     <div id="checkout-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
         <div class="bg-slate-900 border border-slate-700 p-6 rounded-lg w-full max-w-md shadow-2xl">
             <h2 class="text-xl font-bold text-white mb-4">Keranjang Anda</h2>
             <div id="cart-items" class="space-y-2 mb-4 max-h-60 overflow-y-auto"></div>
-            <div class="border-t border-slate-700 pt-4 mt-2">
-                <button onclick="toggleModal()" class="w-full bg-slate-700 text-white py-2 rounded text-sm font-bold hover:bg-slate-600">Tutup</button>
-                <button onclick="alert('Memproses pembayaran...')" class="w-full mt-2 bg-indigo-600 text-white py-2 rounded text-sm font-bold hover:bg-indigo-500">Checkout Sekarang</button>
-            </div>
+            <button onclick="toggleModal()" class="w-full bg-slate-700 text-white py-2 rounded text-sm font-bold">Tutup</button>
+            <button onclick="alert('Memproses pembayaran...')" class="w-full mt-2 bg-indigo-600 text-white py-2 rounded text-sm font-bold">Checkout</button>
         </div>
     </div>
 
     <script>
         let cart = [];
+        let posts = [
+            { id: 1, user: "Sita_Design", status: "Hasil render AI, mantap!", likes: 12, comments: [] },
+            { id: 2, user: "Alex_Cinematic", status: "Kombinasi video loop.", likes: 45, comments: [] }
+        ];
 
-        function toggleModal() {
-            document.getElementById('checkout-modal').classList.toggle('hidden');
-        }
+        function toggleModal() { document.getElementById('checkout-modal').classList.toggle('hidden'); }
+        function runTool(tool) { alert("Membuka alat: " + tool + "..."); }
 
-        function runTool(toolName) { alert("Membuka alat: " + toolName + "..."); }
-
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            const cartList = document.getElementById('cart-items');
-            cartList.innerHTML = cart.map(item => `
-                <div class="flex justify-between text-xs text-slate-300 bg-slate-950 p-2 rounded">
-                    <span>${item.name}</span>
-                    <span>${item.price}</span>
-                </div>
-            `).join('');
-            toggleModal();
-        }
-
-        function renderMarket() {
-            const products = [
-                { id: 1, name: "Mouse Gaming G502", price: "Rp 850.000" },
-                { id: 2, name: "Mechanical Keyboard", price: "Rp 1.200.000" }
-            ];
-            const mc = document.getElementById('market-container');
-            mc.innerHTML = products.map(p => `
-                <div class="bg-slate-950 p-3 rounded border border-slate-800">
-                    <p class="text-xs font-bold text-white">${p.name}</p>
-                    <div class="flex justify-between items-center mt-2">
-                        <span class="text-emerald-500 font-bold text-xs">${p.price}</span>
-                        <button onclick="addToCart('${p.name}', '${p.price}')" class="bg-emerald-600 text-white text-[10px] px-2 py-1 rounded font-bold">+ Keranjang</button>
+        function renderFeed() {
+            const fc = document.getElementById('feed-container');
+            fc.innerHTML = posts.map(p => `
+                <div class="bg-slate-950 p-4 rounded border border-slate-800 space-y-3">
+                    <p class="text-xs font-bold text-white">${p.user}</p>
+                    <p class="text-xs text-slate-300">${p.status}</p>
+                    <div class="flex gap-4 border-t border-slate-800 pt-2">
+                        <button onclick="likePost(${p.id})" class="text-[10px] text-rose-400">❤️ ${p.likes}</button>
+                        <button onclick="addComment(${p.id})" class="text-[10px] text-sky-400">💬 ${p.comments.length}</button>
+                        <button onclick="alert('Link disalin!')" class="text-[10px] text-amber-400">🔗 Bagikan</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        function renderFeed() {
-            const fc = document.getElementById('feed-container');
-            fc.innerHTML = `
-                <div class="bg-slate-950 border border-slate-850 rounded p-4 space-y-3">
-                    <div class="flex items-center space-x-2"><img src="https://i.pravatar.cc/100?u=1" class="w-7 h-7 rounded-full"><span class="text-xs font-bold">Sita_Design</span></div>
-                    <p class="text-xs text-slate-300">Hasil render AI, mantap!</p>
-                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600" class="w-full h-52 object-cover rounded">
-                </div>`;
+        function likePost(id) { posts.find(p => p.id === id).likes++; renderFeed(); }
+        function addComment(id) { 
+            const txt = prompt("Komentar:"); 
+            if(txt) { posts.find(p => p.id === id).comments.push(txt); renderFeed(); } 
+        }
+        function uploadMedia(input) { 
+            if(input.files[0]) { 
+                posts.unshift({ id: Date.now(), user: "Anda", status: "Mengunggah: " + input.files[0].name, likes: 0, comments: [] }); 
+                renderFeed(); 
+            } 
+        }
+
+        function renderMarket() {
+            const mc = document.getElementById('market-container');
+            const items = [{ name: "Mouse Gaming G502", price: "Rp 850.000" }, { name: "Keyboard RGB", price: "Rp 1.200.000" }];
+            mc.innerHTML = items.map(p => `
+                <div class="bg-slate-950 p-3 rounded border border-slate-800">
+                    <p class="text-xs font-bold text-white">${p.name}</p>
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-emerald-500 font-bold text-xs">${p.price}</span>
+                        <button onclick="addToCart('${p.name}', '${p.price}')" class="bg-emerald-600 text-[10px] px-2 py-1 rounded font-bold">+ Keranjang</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            document.getElementById('cart-items').innerHTML = cart.map(i => `<div class="flex justify-between text-xs text-slate-300">${i.name} <span>${i.price}</span></div>`).join('');
+            toggleModal();
         }
 
         window.onload = () => { renderFeed(); renderMarket(); };
