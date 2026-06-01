@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FaceLife + Studio - Premium Dark Mode</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Desain Dasar Dark Mode & Gradasi */
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 0; }
+        
+        /* Navbar Keren dengan Efek Blur Kaca */
+        .navbar { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); color: #38bdf8; padding: 15px 25px; font-size: 24px; font-weight: 800; position: fixed; width: 100%; top: 0; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); z-index: 100; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        
+        .container { max-width: 1150px; margin: 100px auto 40px auto; padding: 0 20px; }
+        
+        /* Kartu Profil Premium */
+        .profile-card { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 25px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); margin-bottom: 25px; display: flex; align-items: center; gap: 25px; border: 1px solid rgba(255, 255, 255, 0.08); position: relative; overflow: hidden; }
+        .profile-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, #38bdf8, #a855f7); }
+        .profile-img { width: 85px; height: 85px; border-radius: 50%; background: linear-gradient(45deg, #38bdf8, #a855f7); border: 3px solid #1e293b; display: flex; align-items: center; justify-content: center; font-size: 38px; color: white; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+        .profile-info { flex-grow: 1; }
+        .profile-name { font-size: 24px; font-weight: 700; color: #ffffff; margin: 0; }
+        
+        /* Tata Letak Grid */
+        .main-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 25px; margin-bottom: 25px; }
+        
+        /* Kotak Kontainer Komponen (Glassmorphism Neon) */
+        .box { background: #1e293b; padding: 20px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.2s, box-shadow 0.2s; }
+        .box:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35); }
+        
+        h2 { margin-top: 0; color: #f1f5f9; font-size: 18px; font-weight: 700; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 10px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        
+        /* Form & Input Bergaya Modern */
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 12px; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #f8fafc; font-size: 14px; box-sizing: border-box; transition: border 0.3s; }
+        input:focus, textarea:focus, select:focus { border-color: #38bdf8; outline: none; box-shadow: 0 0 8px rgba(56, 189, 248, 0.2); }
+        
+        /* Tombol Animasi Glowing */
+        button { background: linear-gradient(90deg, #38bdf8, #0284c7); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; transition: all 0.3s; box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2); }
+        button:hover { background: linear-gradient(90deg, #0284c7, #38bdf8); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4); }
+        
+        /* Badge Warna Dinamis */
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; display: inline-block; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge-digital { background: linear-gradient(45deg, #10b981, #059669); box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
+        .badge-fisik { background: linear-gradient(45deg, #f97316, #ea580c); box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3); }
+        
+        /* Daftar Item Produk & Status */
+        .product-item { background: #131f35; padding: 15px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.03); margin-bottom: 12px; }
+        .price { color: #f43f5e; font-size: 18px; font-weight: 800; margin: 6px 0; }
+        .post-card { border-left: 4px solid #38bdf8; background: #131f35; padding: 15px; border-radius: 0 10px 10px 0; margin-bottom: 15px; }
+        
+        /* Studio Kreatif Canvas & Video */
+        .studio-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        canvas, video { width: 100%; max-height: 250px; background: #090d16; border-radius: 10px; margin-top: 12px; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .slider-group { margin: 12px 0; font-size: 13px; color: #94a3b8; }
+        .slider-group input[type=range] { padding: 0; background: transparent; cursor: pointer; }
+        .cart-item { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #cbd5e1; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span><i class="fa-solid fa-bolt" style="color: #38bdf8;"></i> FaceLife + Studio</span>
+        <span style="font-size: 14px; color: #94a3b8;"><i class="fa-solid fa-circle" style="color: #10b981; font-size: 10px;"></i> Server Aktif</span>
+    </div>
+
+    <div class="container">
+        <div class="profile-card">
+            <div class="profile-img"><i class="fa-solid fa-user-astronaut"></i></div>
+            <div class="profile-info">
+                <p class="profile-name">{{ user_profile.name }}</p>
+                <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 14px;"><i class="fa-solid fa-fingerprint"></i> {{ user_profile.bio }}</p>
+            </div>
+            <div style="width: 220px; background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                <form action="/update_profile" method="POST" style="margin: 0;">
+                    <input type="text" name="new_name" placeholder="Ganti Nama" style="padding: 6px; margin-bottom: 6px; font-size: 12px;" required>
+                    <input type="text" name="new_bio" placeholder="Ganti Bio" style="padding: 6px; margin-bottom: 8px; font-size: 12px;" required>
+                    <button type="submit" style="padding: 6px; font-size: 11px; background: #475569; box-shadow: none;">Update Data</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div>
+                <div class="box">
+                    <h2><i class="fa-solid fa-feather" style="color: #38bdf8;"></i> Ekspresikan Dirimu</h2>
+                    <form action="/post" method="POST">
+                        <textarea name="content" rows="3" placeholder="Apa ide hebatmu hari ini, {{ user_profile.name }}?" required></textarea>
+                        <button type="submit"><i class="fa-solid fa-paper-plane"></i> Bagikan Kiriman</button>
+                    </form>
+                </div>
+
+                {% for post in posts %}
+                <div class="box post-card">
+                    <div style="font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-circle-user" style="font-size: 18px;"></i> {{ post.username }}
+                    </div>
+                    <p style="color: #e2e8f0; line-height: 1.5; margin: 10px 0;">{{ post.content }}</p>
+                    <form action="/like/{{ post.id }}" method="POST">
+                        <button type="submit" style="background: none; color: #94a3b8; width: auto; padding: 0; box-shadow: none;">
+                            <i class="fa-regular fa-heart" style="color: #f43f5e;"></i> Suka Kiriman ({{ post.likes }})
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div>
+                <div class="box" style="border-top: 3px solid #10b981;">
+                    <h2><i class="fa-solid fa-circle-plus" style="color: #10b981;"></i> Tambah Dagangan Baru</h2>
+                    <form action="/add_product" method="POST">
+                        <input type="text" name="prod_name" placeholder="Nama Produk Hasil Karya" required>
+                        <input type="number" name="price" placeholder="Harga Jual (Rp)" required>
+                        <select name="category">
+                            <option value="Fisik">📦 Produk Fisik (Kerajinan)</option>
+                            <option value="Digital">⚡ Produk Digital (File / PDF)</option>
+                        </select>
+                        <input type="text" name="link" placeholder="Link File / Link No WhatsApp" required>
+                        <button type="submit" style="background: linear-gradient(90deg, #10b981, #059669); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);"><i class="fa-solid fa-store"></i> Pajang ke Toko</button>
+                    </form>
+                </div>
+
+                <div class="box" style="border: 2px solid #a855f7; background: #1e1b4b;">
+                    <h2><i class="fa-solid fa-basket-shopping" style="color: #a855f7;"></i> Keranjang Belanja</h2>
+                    {% if not cart_items %}
+                        <p style="color: #94a3b8; font-size: 13px; margin: 0;">Keranjang kamu masih kosong.</p>
+                    {% else %}
+                        {% for item in cart_items %}
+                        <div class="cart-item">
+                            <span><i class="fa-solid fa-check" style="color: #a855f7;"></i> {{ item.prod_name }}</span>
+                            <span style="font-weight: 700;">Rp {{ "{:,}".format(item.price) }}</span>
+                        </div>
+                        {% endfor %}
+                        <div style="margin: 15px 0 10px 0; font-size: 16px; font-weight: 800; display: flex; justify-content: space-between; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 10px;">
+                            <span>Total Tagihan:</span>
+                            <span style="color: #f43f5e;">Rp {{ "{:,}".format(total_price) }}</span>
+                        </div>
+                        <form action="/checkout" method="POST">
+                            <button type="submit" style="background: linear-gradient(90deg, #a855f7, #7c3aed); box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);"><i class="fa-solid fa-cash-register"></i> Bayar Sekarang (Simulasi)</button>
+                        </form>
+                    {% endif %}
+                </div>
+
+                <div class="box">
+                    <h2><i class="fa-solid fa-铺" style="color: #f59e0b;"></i> Etalase Produk Karyamu</h2>
+                    {% if not products %}
+                        <p style="color: #94a3b8; font-size: 13px; margin: 0;">Belum ada barang jualan.</p>
+                    {% endif %}
+                    {% for prod in products %}
+                    <div class="product-item">
+                        <span class="badge {% if prod.category == 'Digital' %}badge-digital{% else %}badge-fisik{% endif %}">{{ prod.category }}</span>
+                        <div style="font-weight: 700; font-size: 16px; margin-top: 8px; color: #ffffff;">{{ prod.prod_name }}</div>
+                        <div class="price">Rp {{ "{:,}".format(prod.price) }}</div>
+                        <div style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;"><i class="fa-solid fa-user-tag"></i> Penjual: {{ prod.seller }}</div>
+                        
+                        <form action="/add_to_cart/{{ prod.id }}" method="POST" style="margin-bottom: 6px;">
+                            <button type="submit" style="background: #334155; font-size: 12px; padding: 8px; box-shadow: none;"><i class="fa-solid fa-cart-plus"></i> Masukkan Keranjang</button>
+                        </form>
+                        
+                        <a href="{{ prod.link }}" target="_blank" style="text-decoration: none;">
+                            <button style="background: rgba(255,255,255,0.05); color: #cbd5e1; font-size: 12px; padding: 7px; border: 1px solid rgba(255,255,255,0.1); width: 100%;">
+                                {% if prod.category == 'Digital' %}<i class="fa-solid fa-download"></i> Akses Aset File{% else %}<i class="fa-brands fa-whatsapp"></i> Hubungi via WA{% endif %}
+                            </button>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="studio-layout">
+            <div class="box" style="border-top: 4px solid #c084fc;">
+                <h2><i class="fa-solid fa-wand-magic-sparkles" style="color: #c084fc;"></i> Studio Desain Foto</h2>
+                <label style="font-size: 13px; color: #94a3b8;">Upload Gambar Proyek:</label>
+                <input type="file" id="imageLoader" accept="image/*" style="margin-top: 5px;">
+                
+                <div class="slider-group">
+                    <label>Kecerahan (Brightness):</label>
+                    <input type="range" id="brightness" min="50" max="150" value="100">
+                </div>
+                <div class="slider-group">
+                    <label>Kontras (Contrast):</label>
+                    <input type="range" id="contrast" min="50" max="1max" value="100">
+                </div>
+                <div class="slider-group">
+                    <label>Efek Blur:</label>
+                    <input type="range" id="blur" min="0" max="10" value="0">
+                </div>
+                <canvas id="imageCanvas"></canvas>
+            </div>
+
+            <div class="box" style="border-top: 4px solid #f97316;">
+                <h2><i class="fa-solid fa-film" style="color: #f97316;"></i> Studio Editing Video</h2>
+                <label style="font-size: 13px; color: #94a3b8;">Upload Video Proyek:</label>
+                <input type="file" id="videoLoader" accept="video/*" style="margin-top: 5px;">
+                <video id="videoPlayer" controls></video>
+                <div style="margin-top: 12px; display: flex; gap: 10px;">
+                    <button id="muteBtn" style="background: #475569;"><i class="fa-solid fa-volume-xmark"></i> Mute Audio</button>
+                    <button id="speedBtn" style="background: #d97706;"><i class="fa-solid fa-gauge"></i> Kecepatan 1.5x</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // SCRIPT DESAIN FOTO
+        const imageLoader = document.getElementById('imageLoader');
+        const canvas = document.getElementById('imageCanvas');
+        const ctx = canvas.getContext('2d');
+        let activeImage = new Image();
+
+        imageLoader.addEventListener('change', (e) => {
+            const reader = new FileReader();
+            reader.onload = (event) => { activeImage.src = event.target.result; }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        activeImage.onload = function() {
+            canvas.width = activeImage.width > 500 ? 500 : activeImage.width;
+            canvas.height = (activeImage.height / activeImage.width) * canvas.width;
+            applyFilters();
+        }
+
+        const brightnessSlider = document.getElementById('brightness');
+        const contrastSlider = document.getElementById('contrast');
+        const blurSlider = document.getElementById('blur');
+
+        [brightnessSlider, contrastSlider, blurSlider].forEach(slider => {
+            slider.addEventListener('input', applyFilters);
+        });
+
+        function applyFilters() {
+            if (!activeImage.src) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.filter = `brightness(${brightnessSlider.value}%) contrast(${contrastSlider.value}%) blur(${blurSlider.value}px)`;
+            ctx.drawImage(activeImage, 0, 0, canvas.width, canvas.height);
+        }
+
+        // SCRIPT EDITING VIDEO
+        const videoLoader = document.getElementById('videoLoader');
+        const videoPlayer = document.getElementById('videoPlayer');
+        const muteBtn = document.getElementById('muteBtn');
+        const speedBtn = document.getElementById('speedBtn');
+
+        videoLoader.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            const url = URL.createObjectURL(file);
+            videoPlayer.src = url;
+            videoPlayer.load();
+        });
+
+        muteBtn.addEventListener('click', () => {
+            videoPlayer.muted = !videoPlayer.muted;
+            muteBtn.innerHTML = videoPlayer.muted ? '<i class="fa-solid fa-volume-high"></i> Unmute' : '<i class="fa-solid fa-volume-xmark"></i> Mute';
+        });
+
+        speedBtn.addEventListener('click', () => {
+            if (videoPlayer.playbackRate === 1.0) {
+                videoPlayer.playbackRate = 1.5;
+                speedBtn.innerText = "Kecepatan Normal";
+            } else {
+                videoPlayer.playbackRate = 1.0;
+                speedBtn.innerText = "Kecepatan 1.5x";
+            }
+        });
+    </script>
+</body>
+</html>
