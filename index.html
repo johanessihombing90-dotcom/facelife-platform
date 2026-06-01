@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FaceLife+ Gen-AI Pro Dashboard</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .hidden { display: none !important; }
@@ -18,247 +17,79 @@
 
     <div class="max-w-[1440px] mx-auto space-y-6">
         
-        <!-- ==================== HEADER UTAMA (PERBAIKAN LOGO) ==================== -->
         <header class="flex justify-between items-start bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl">
             <div class="space-y-2">
                 <div class="flex items-center space-x-3">
-                    <img src="logo.jpg" alt="Logo FaceLife+" class="w-14 h-14 object-cover rounded-full shadow-lg border border-slate-700">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop" 
+                         alt="Logo" 
+                         style="display: block !important; width: 56px !important; height: 56px !important; border-radius: 50% !important; object-fit: cover !important; border: 1px solid #334155 !important;">
                     <h1 class="text-2xl md:text-3xl font-semibold text-white tracking-tight">FaceLife+ <span class="text-xs bg-indigo-600 text-white px-2 py-0.5 rounded-full font-normal align-middle ml-1">Gen-AI Pro</span></h1>
                 </div>
                 <p class="text-xs md:text-sm text-emerald-400 font-medium">Tempat untuk ekspresikan hidupmu - design foto - edit video - Tawarkan produkmu - FaceLie AI Generator</p>
             </div>
-            
-            <div class="border border-slate-700 p-3 rounded bg-slate-950 flex flex-col space-y-1.5 text-xs font-bold min-w-[90px] text-center shadow-md">
-                <a href="#" class="text-emerald-400 hover:text-emerald-300 transition tracking-wide">sign up</a>
-<!-- ==================== HEADER UTAMA (PERBAIKAN TOTAL LINK LOGO) ==================== -->
-        <header class="flex justify-between items-start bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl">
-            <div class="space-y-2">
-                <div class="flex items-center space-x-3">
-                    <!-- Menggunakan URL absolut pihak ketiga yang dijamin 100% online -->
-                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop" alt="Logo FaceLife+" class="w-14 h-14 object-cover rounded-full shadow-lg border border-indigo-500/50">
-                    <h1 class="text-2xl md:text-3xl font-semibold text-white tracking-tight">FaceLife+ <span class="text-xs bg-indigo-600 text-white px-2 py-0.5 rounded-full font-normal align-middle ml-1">Gen-AI Pro</span></h1>
-                </div>
-                <p class="text-xs md:text-sm text-emerald-400 font-medium">Tempat untuk ekspresikan hidupmu - design foto - edit video - Tawarkan produkmu - FaceLie AI Generator</p>
-            </div>
-            
             <div class="border border-slate-700 p-3 rounded bg-slate-950 flex flex-col space-y-1.5 text-xs font-bold min-w-[90px] text-center shadow-md">
                 <a href="#" class="text-emerald-400 hover:text-emerald-300 transition tracking-wide">sign up</a>
                 <div class="border-t border-slate-800 my-1"></div>
                 <a href="#" class="text-rose-500 hover:text-rose-400 transition tracking-wide">sign in</a>
             </div>
-        </header>                <div class="border-t border-slate-800 my-1"></div>
-                <a href="#" class="text-rose-500 hover:text-rose-400 transition tracking-wide">sign in</a>
-            </div>
         </header>
 
-        <!-- ==================== DASHBOARD GRID 3 KOLOM ==================== -->
         <main class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
             
-            <!-- KOLOM KIRI: AI GENERATOR (PROMPT) -->
-            <div class="lg:col-span-1 bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl flex flex-col justify-between min-h-[580px]">
-                <div class="space-y-4">
-                    <h2 class="text-sm font-bold text-indigo-400 border-b border-slate-800 pb-2 uppercase tracking-wider">AI Generator (prompt)</h2>
-                    <textarea id="prompt-box" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-200 placeholder-slate-600 resize-none" placeholder="Masukkan prompt perintah di sini..."></textarea>
-                    
-                    <div class="flex flex-col space-y-2 pt-2">
-                        <button onclick="runAI('text')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-2 rounded transition shadow-md flex items-center justify-center gap-1">📝 Teks</button>
-                        <button onclick="runAI('image')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-2 rounded transition shadow-md flex items-center justify-center gap-1">🖼️ Gambar</button>
-                        <button onclick="runAI('video')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-2 rounded transition shadow-md flex items-center justify-center gap-1">🎬 Video</button>
-                    </div>
-                </div>
-
-                <div class="bg-slate-950 text-slate-200 rounded border border-slate-900 p-3 flex items-center justify-center relative min-h-[220px] overflow-hidden mt-4 shadow-inner">
-                    <div id="ai-placeholder" class="text-center text-slate-600 text-xs">Layar Pantau Output AI</div>
-                    <div id="ai-loader" class="hidden text-center"><div class="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto"></div></div>
-                    <div id="ai-result-text" class="hidden text-xs text-slate-300 leading-relaxed bg-slate-900 p-2.5 rounded border border-slate-800 w-full overflow-y-auto max-h-[200px]"></div>
-                    <img id="ai-result-image" class="hidden max-h-[200px] object-contain rounded" src="">
-                    <video id="ai-result-video" class="hidden w-full max-h-[200px] rounded" controls autoplay muted loop></video>
+            <div class="lg:col-span-1 bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl min-h-[580px]">
+                <h2 class="text-sm font-bold text-indigo-400 border-b border-slate-800 pb-2 uppercase tracking-wider">AI Generator (prompt)</h2>
+                <textarea id="prompt-box" rows="4" class="w-full mt-4 bg-slate-950 border border-slate-800 rounded p-2.5 text-xs text-slate-200 placeholder-slate-600 resize-none" placeholder="Masukkan prompt..."></textarea>
+                <div class="flex flex-col space-y-2 pt-2">
+                    <button onclick="runAI()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-2 rounded">📝 Teks</button>
+                    <button onclick="runAI()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-2 rounded">🖼️ Gambar</button>
+                    <button onclick="runAI()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-2 rounded">🎬 Video</button>
                 </div>
             </div>
 
-            <!-- KOLOM TENGAH: FEED SOSIAL MEDIA -->
             <div class="lg:col-span-2 bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2">
                     <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wider">Feed sosial media</h2>
-                    <button onclick="alert('Fitur upload postingan siap dikembangkan!')" class="text-[11px] bg-sky-600 hover:bg-sky-500 text-white px-3 py-1 rounded font-semibold transition shadow-md">+ Buat Postingan</button>
+                    <button onclick="alert('Fitur upload postingan siap!')" class="text-[11px] bg-sky-600 text-white px-3 py-1 rounded font-semibold">+ Buat Postingan</button>
                 </div>
-                
-                <div id="feed-container" class="space-y-4 max-h-[620px] overflow-y-auto pr-1 custom-scroll">
-                    <!-- Konten dimuat lewat JS -->
-                </div>
+                <div id="feed-container" class="space-y-4 max-h-[620px] overflow-y-auto pr-1 custom-scroll"></div>
             </div>
 
-            <!-- KOLOM KANAN: MARKETPLACE & EDITOR -->
             <div class="lg:col-span-1 space-y-6">
-                
-                <!-- PANEL MARKETPLACE -->
-                <div class="bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl space-y-4">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                        <h2 class="text-sm font-bold text-emerald-400 uppercase tracking-wider">Market Place</h2>
-                        <button onclick="openMarketModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-semibold px-2 py-0.5 rounded transition shadow-md">+ Jual</button>
-                    </div>
-                    
-                    <div id="market-container" class="space-y-4 max-h-[320px] overflow-y-auto pr-1 custom-scroll">
-                        <!-- Konten dimuat lewat JS -->
-                    </div>
+                <div class="bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl">
+                    <h2 class="text-sm font-bold text-emerald-400 border-b border-slate-800 pb-2 uppercase tracking-wider">Market Place</h2>
+                    <div id="market-container" class="space-y-4 mt-4"></div>
                 </div>
-
-                <!-- PANEL EDITORS -->
-                <div class="bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl space-y-4">
+                <div class="bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl">
                     <h2 class="text-sm font-bold text-amber-400 border-b border-slate-800 pb-2 uppercase tracking-wider">Editor Panel</h2>
-                    
-                    <div class="space-y-2">
-                        <span class="text-xs font-semibold text-slate-400 block uppercase tracking-wide">editor foto</span>
-                        <button onclick="runTool('edit-photo')" class="w-full bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-200 font-medium py-1.5 rounded text-xs transition shadow-sm">⚡ Jalankan Editor Foto</button>
-                        <div class="bg-slate-950 p-1 rounded h-20 flex items-center justify-center border border-slate-900 shadow-inner"><img id="tool-photo-output" class="hidden max-h-full rounded" src=""></div>
-                    </div>
-
-                    <div class="space-y-2 pt-2 border-t border-slate-800">
-                        <span class="text-xs font-semibold text-slate-400 block uppercase tracking-wide">editor video</span>
-                        <button onclick="runTool('edit-video')" class="w-full bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-200 font-medium py-1.5 rounded text-xs transition shadow-sm">🎬 Jalankan Editor Video</button>
-                        <div class="bg-slate-950 p-1 rounded h-20 flex items-center justify-center border border-slate-900 shadow-inner"><video id="tool-video-output" class="hidden max-h-full rounded" src=""></video></div>
-                    </div>
+                    <button onclick="alert('Jalankan Editor...')" class="w-full mt-4 bg-slate-950 border border-slate-800 text-slate-200 py-1.5 rounded text-xs">⚡ Editor Foto</button>
+                    <button onclick="alert('Jalankan Editor...')" class="w-full mt-2 bg-slate-950 border border-slate-800 text-slate-200 py-1.5 rounded text-xs">🎬 Editor Video</button>
                 </div>
-
             </div>
         </main>
     </div>
 
-    <!-- MODAL PASAR -->
-    <div id="market-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-        <div class="bg-slate-900 border border-slate-800 p-5 rounded-lg max-w-sm w-full space-y-3 shadow-2xl">
-            <h3 class="text-sm font-bold text-emerald-400 border-b border-slate-800 pb-1.5">Formulir Pasar Baru</h3>
-            <div class="space-y-2 text-xs">
-                <div><label class="block text-slate-400 mb-0.5">Nama Toko</label><input id="m-shop" type="text" class="w-full bg-slate-950 p-2 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500"></div>
-                <div><label class="block text-slate-400 mb-0.5">Produk</label><input id="m-name" type="text" class="w-full bg-slate-950 p-2 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500"></div>
-                <div><label class="block text-slate-400 mb-0.5">Harga</label><input id="m-price" type="text" class="w-full bg-slate-950 p-2 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500" placeholder="Rp ..."></div>
-                <div><label class="block text-slate-400 mb-0.5">Kontak atau Pesan</label><input id="m-contact" type="text" class="w-full bg-slate-950 p-2 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500" placeholder="WhatsApp / No HP"></div>
-                <div><label class="block text-slate-400 mb-0.5">Keterangan Tambahan Keranjang</label><textarea id="m-desc" rows="2" class="w-full bg-slate-950 p-2 border border-slate-800 rounded text-slate-200 resize-none focus:outline-none focus:border-emerald-500"></textarea></div>
-            </div>
-            <div class="flex justify-end space-x-2 pt-2 text-xs">
-                <button onclick="closeMarketModal()" class="bg-slate-800 text-slate-300 px-3 py-1.5 rounded hover:bg-slate-700 transition">Batal</button>
-                <button onclick="submitProduct()" class="bg-emerald-600 text-white px-3 py-1.5 rounded font-semibold hover:bg-emerald-500 transition">Terbitkan</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- SCRIPT UTAMA -->
     <script>
-        // Kosongkan URL agar tidak menabrak backend lokal yang mati saat di-host
-        const API_URL = ""; 
-
-        // DATA CONTOH SEHAT (PERBAIKAN TOTAL)
         const samplePosts = [
-            {
-                id: 101,
-                username: "Sita_Design",
-                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop",
-                status: "Hasil renders gambar cyber-punk dari prompt AI generator barusan. Gradasi birunya pas banget mirip sama logo FaceLife+!",
-                type: "image",
-                media_url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop"
-            },
-            {
-                id: 102,
-                username: "Alex_Cinematic",
-                avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=80&h=80&fit=crop",
-                status: "Kombinasi hasil video generator pendek 3D loop landscape. Smooth banget efek transisinya!",
-                type: "video",
-                media_url: "https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-42282-large.mp4"
-            }
+            { id: 101, username: "Sita_Design", avatar: "https://i.pravatar.cc/100?u=1", status: "Hasil render AI, mantap!", type: "image", media_url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600" },
+            { id: 102, username: "Alex_Cinematic", avatar: "https://i.pravatar.cc/100?u=2", status: "Kombinasi video loop.", type: "video", media_url: "https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-42282-large.mp4" }
         ];
 
-        const sampleMarket = [
-            { 
-                shop_name: "Sinar Jaya Tech", 
-                product_name: "Mouse Gaming Logitech G502", 
-                price: "Rp 850.000", 
-                contact: "+62 812-3456-7890", 
-                description: "Mouse gaming sensor HERO 25K berakurasi tinggi, RGB customizable, kondisi mulus 100% garansi resmi." 
-            }
-        ];
-
-        function renderFeedItems(posts) {
-            const container = document.getElementById('feed-container');
-            container.innerHTML = '';
-            posts.forEach(p => {
-                let mediaHTML = '';
-                if (p.type === 'image' && p.media_url) {
-                    mediaHTML = `<div class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1">upload foto</div>
-                                 <img src="${p.media_url}" class="w-full h-52 object-cover rounded border border-slate-900 shadow-inner">`;
-                } else if (p.type === 'video' && p.media_url) {
-                    mediaHTML = `<div class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1">upload video</div>
-                                 <video src="${p.media_url}" class="w-full h-52 object-cover rounded border border-slate-900 shadow-inner" controls muted loop></video>`;
-                }
-
-                container.innerHTML += `
-                    <div class="bg-slate-950 border border-slate-850 rounded p-4 space-y-3 shadow-md">
-                        <div class="flex items-center space-x-2">
-                            <img src="${p.avatar}" class="w-7 h-7 rounded-full border border-slate-700">
-                            <span class="text-xs font-bold text-slate-200">${p.username}</span>
-                        </div>
-                        <div class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">status</div>
-                        <p class="text-xs text-slate-300 leading-relaxed bg-slate-900 p-2.5 rounded border border-slate-800">${p.status}</p>
-                        ${mediaHTML}
-                        <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-800 text-[11px]">
-                            <button onclick="alert('Menyukai postingan!')" class="bg-slate-900 px-2.5 py-1 rounded border border-slate-800 hover:bg-slate-850 font-semibold text-rose-400 transition">like (5)</button>
-                            <button onclick="alert('Buka kolom komentar')" class="bg-slate-900 px-2.5 py-1 rounded border border-slate-800 hover:bg-slate-850 font-semibold text-slate-400 transition">komentar</button>
-                            <button onclick="alert('Tautan disalin ke clipboard')" class="bg-slate-900 px-2.5 py-1 rounded border border-slate-800 hover:bg-slate-850 font-semibold text-slate-400 transition">bagi</button>
-                            <div class="h-4 w-[1px] bg-slate-800 mx-0.5"></div>
-                            <button onclick="alert('Pilih file gambar untuk ditambahkan')" class="bg-slate-900 px-2.5 py-1 rounded border border-sky-900/50 hover:bg-sky-950 text-sky-400 font-semibold transition flex items-center gap-1">📸 tambah foto</button>
-                            <button onclick="alert('Pilih file video untuk ditambahkan')" class="bg-slate-900 px-2.5 py-1 rounded border border-amber-900/50 hover:bg-amber-950 text-amber-400 font-semibold transition flex items-center gap-1">🎥 tambah video</button>
-                        </div>
-                    </div>`;
-            });
+        function render() {
+            const fc = document.getElementById('feed-container');
+            fc.innerHTML = samplePosts.map(p => `
+                <div class="bg-slate-950 border border-slate-850 rounded p-4 space-y-3">
+                    <div class="flex items-center space-x-2"><img src="${p.avatar}" class="w-7 h-7 rounded-full"><span class="text-xs font-bold">${p.username}</span></div>
+                    <p class="text-xs text-slate-300">${p.status}</p>
+                    ${p.type === 'image' ? `<img src="${p.media_url}" class="w-full h-52 object-cover rounded">` : `<video src="${p.media_url}" class="w-full h-52 rounded" controls></video>`}
+                    <div class="flex gap-2 border-t border-slate-800 pt-2">
+                        <button class="text-[10px] text-rose-400 border border-slate-800 px-2 py-1 rounded">like</button>
+                        <button class="text-[10px] text-sky-400 border border-slate-800 px-2 py-1 rounded">📸 foto</button>
+                        <button class="text-[10px] text-amber-400 border border-slate-800 px-2 py-1 rounded">🎥 video</button>
+                    </div>
+                </div>
+            `).join('');
         }
-
-        function renderMarketItems(items) {
-            const container = document.getElementById('market-container');
-            container.innerHTML = '';
-            items.forEach(p => {
-                container.innerHTML += `
-                    <div class="bg-slate-950 border border-slate-850 p-3 rounded text-[11px] space-y-1.5 shadow-md">
-                        <div><span class="text-[10px] text-slate-500 uppercase font-mono block">Nama Toko:</span> <span class="font-bold text-slate-100 text-xs">${p.shop_name}</span></div>
-                        <div><span class="text-[10px] text-slate-500 uppercase font-mono block">produk:</span> <span class="text-slate-300 font-medium">${p.product_name}</span></div>
-                        <div><span class="text-[10px] text-slate-500 uppercase font-mono block">harga:</span> <span class="text-emerald-400 font-bold">${p.price}</span></div>
-                        <div><span class="text-[10px] text-slate-500 uppercase font-mono block">kontak:</span> <span class="text-sky-400 font-medium underline cursor-pointer">${p.contact}</span></div>
-                        <div class="bg-slate-900 p-2 rounded border border-slate-800 text-slate-400 leading-tight mt-2 flex flex-col justify-between">
-                            <div><span class="text-[9px] block text-slate-500 uppercase font-mono mb-0.5">keranjang (catatan):</span>${p.description}</div>
-                            <button onclick="alert('Berhasil dimasukkan ke dalam keranjang!')" class="w-full mt-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-1 rounded text-[10px] uppercase tracking-wide transition">🛒 Tambah Ke Keranjang</button>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        function loadFeed() { renderFeedItems(samplePosts); }
-        function loadMarket() { renderMarketItems(sampleMarket); }
-
-        function openMarketModal() { document.getElementById('market-modal').classList.remove('hidden'); }
-        function closeMarketModal() { document.getElementById('market-modal').classList.add('hidden'); }
-
-        function submitProduct() {
-            const shop_name = document.getElementById('m-shop').value || "Toko Baru";
-            const product_name = document.getElementById('m-name').value || "Produk Baru";
-            const price = document.getElementById('m-price').value || "Rp 0";
-            const contact = document.getElementById('m-contact').value || "-";
-            const description = document.getElementById('m-desc').value || "Tidak ada catatan.";
-            
-            sampleMarket.unshift({ shop_name, product_name, price, contact, description });
-            closeMarketModal();
-            loadMarket();
-        }
-
-        function runAI(type) {
-            const prompt = document.getElementById('prompt-box').value;
-            if(!prompt.trim()) { alert("Isi kotak prompt terlebih dahulu!"); return; }
-            alert("Fitur AI terhubung dengan API internal. Sistem sedang memproses prompt: " + prompt);
-        }
-
-        function runTool(type) { alert("Menjalankan panel editor sistem..."); }
-
-        window.onload = function() {
-            loadFeed();
-            loadMarket();
-        }
+        window.onload = render;
     </script>
 </body>
 </html>
