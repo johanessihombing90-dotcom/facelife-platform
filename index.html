@@ -83,7 +83,26 @@
         ];
 
         function toggleModal() { document.getElementById('checkout-modal').classList.toggle('hidden'); }
-        function runTool(tool) { alert("Membuka alat: " + tool + "..."); }
+        
+        // FUNGSI AI GENERATOR DENGAN SIMULASI LOADING
+        function runTool(toolName) {
+            const prompt = document.getElementById('prompt-box').value;
+            if (!prompt) { alert("Masukkan prompt terlebih dahulu!"); return; }
+            
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                alert(`Berhasil! ${toolName} memproses: "${prompt}"`);
+                posts.unshift({ id: Date.now(), user: "AI Engine", status: `Hasil ${toolName}: ${prompt}`, likes: 0, comments: [] });
+                renderFeed();
+                btn.innerText = originalText;
+                btn.disabled = false;
+                document.getElementById('prompt-box').value = "";
+            }, 2000);
+        }
 
         function renderFeed() {
             const fc = document.getElementById('feed-container');
@@ -101,16 +120,8 @@
         }
 
         function likePost(id) { posts.find(p => p.id === id).likes++; renderFeed(); }
-        function addComment(id) { 
-            const txt = prompt("Komentar:"); 
-            if(txt) { posts.find(p => p.id === id).comments.push(txt); renderFeed(); } 
-        }
-        function uploadMedia(input) { 
-            if(input.files[0]) { 
-                posts.unshift({ id: Date.now(), user: "Anda", status: "Mengunggah: " + input.files[0].name, likes: 0, comments: [] }); 
-                renderFeed(); 
-            } 
-        }
+        function addComment(id) { const txt = prompt("Komentar:"); if(txt) { posts.find(p => p.id === id).comments.push(txt); renderFeed(); } }
+        function uploadMedia(input) { if(input.files[0]) { posts.unshift({ id: Date.now(), user: "Anda", status: "Mengunggah: " + input.files[0].name, likes: 0, comments: [] }); renderFeed(); } }
 
         function renderMarket() {
             const mc = document.getElementById('market-container');
