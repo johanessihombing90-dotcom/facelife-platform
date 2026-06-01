@@ -2,148 +2,56 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FaceLife+ Gen-AI Pro Dashboard</title>
+    <title>FaceLife+ Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .custom-scroll::-webkit-scrollbar { width: 5px; }
-        .custom-scroll::-webkit-scrollbar-track { background: #0b1329; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #1c2541; border-radius: 4px; }
-        .hidden { display: none !important; }
-    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen font-sans p-4 md:p-6">
-
-    <div class="max-w-[1440px] mx-auto space-y-6">
+<body class="bg-slate-950 text-slate-200 p-6">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <header class="flex justify-between items-start bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl">
-            <div class="space-y-2">
-                <div class="flex items-center space-x-3">
-                    <img src="https://i.imgur.com/7WdEKqE.jpeg" alt="Logo" style="display: block !important; width: 56px !important; height: 56px !important; border-radius: 50% !important; object-fit: cover !important; border: 1px solid #334155 !important;">
-                    <h1 class="text-2xl md:text-3xl font-semibold text-white tracking-tight">FaceLife+ <span class="text-xs bg-indigo-600 text-white px-2 py-0.5 rounded-full font-normal align-middle ml-1">Gen-AI Pro</span></h1>
-                </div>
-                <p class="text-xs md:text-sm text-emerald-400 font-medium">Tempat untuk ekspresikan hidupmu - design foto - edit video - Tawarkan produkmu - FaceLie AI Generator</p>
-            </div>
-            <div class="border border-slate-700 p-3 rounded bg-slate-950 flex flex-col space-y-1.5 text-xs font-bold min-w-[90px] text-center shadow-md">
-                <a href="#" class="text-emerald-400">sign up</a>
-                <div class="border-t border-slate-800 my-1"></div>
-                <a href="#" class="text-rose-500">sign in</a>
-            </div>
-        </header>
+        <div class="bg-slate-900 p-5 rounded border border-slate-800">
+            <h2 class="font-bold text-indigo-400 mb-4">AI Generator</h2>
+            <textarea id="prompt" class="w-full bg-slate-950 p-3 rounded text-sm border border-slate-700 mb-3" rows="4" placeholder="Tuliskan prompt AI..."></textarea>
+            <button onclick="sendPrompt()" id="btn" class="w-full bg-indigo-600 py-2 rounded text-xs font-bold hover:bg-indigo-500">Generate Post</button>
+        </div>
 
-        <main class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
-            
-            <div class="lg:col-span-1 bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl min-h-[580px]">
-                <h2 class="text-sm font-bold text-indigo-400 border-b border-slate-800 pb-2 uppercase tracking-wider">AI Generator</h2>
-                <textarea id="prompt-box" rows="4" class="w-full mt-4 bg-slate-950 border border-slate-800 rounded p-2.5 text-xs text-slate-200" placeholder="Masukkan prompt..."></textarea>
-                <div class="flex flex-col space-y-2 pt-2">
-                    <button onclick="runTool('AI Text Generator')" class="w-full bg-indigo-600 py-2 rounded text-xs font-semibold">📝 Teks</button>
-                    <button onclick="runTool('AI Image Generator')" class="w-full bg-indigo-600 py-2 rounded text-xs font-semibold">🖼️ Gambar</button>
-                    <button onclick="runTool('AI Video Generator')" class="w-full bg-indigo-600 py-2 rounded text-xs font-semibold">🎬 Video</button>
-                </div>
+        <div class="lg:col-span-2 space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="font-bold text-emerald-400">Feed Terbaru</h2>
+                <button onclick="alert('Fitur Upload')" class="bg-sky-600 px-3 py-1 rounded text-[10px]">Upload Media</button>
             </div>
-
-            <div class="lg:col-span-2 bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl space-y-4">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <h2 class="text-sm font-bold text-sky-400 uppercase tracking-wider">Feed Sosial Media</h2>
-                    <input type="file" id="fileInput" class="hidden" accept="image/*,video/*" onchange="uploadMedia(this)">
-                    <button onclick="document.getElementById('fileInput').click()" class="bg-sky-600 text-[10px] px-3 py-1 rounded font-bold hover:bg-sky-500">+ Upload</button>
+            <div id="feed" class="space-y-4">
                 </div>
-                <div id="feed-container" class="space-y-4 max-h-[620px] overflow-y-auto pr-1 custom-scroll"></div>
-            </div>
-
-            <div class="lg:col-span-1 space-y-6">
-                <div class="bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl">
-                    <h2 class="text-sm font-bold text-emerald-400 border-b border-slate-800 pb-2 uppercase tracking-wider">Market Place</h2>
-                    <div id="market-container" class="space-y-4 mt-4"></div>
-                </div>
-                <div class="bg-slate-900 p-5 rounded-lg border border-slate-800 shadow-xl">
-                    <h2 class="text-sm font-bold text-amber-400 border-b border-slate-800 pb-2 uppercase tracking-wider">Editor Panel</h2>
-                    <button onclick="runTool('Editor Foto Profesional')" class="w-full mt-4 bg-slate-950 border border-slate-800 text-slate-200 py-2 rounded text-xs font-bold hover:bg-slate-800 transition">⚡ Editor Foto</button>
-                    <button onclick="runTool('Editor Video Cinematic')" class="w-full mt-2 bg-slate-950 border border-slate-800 text-slate-200 py-2 rounded text-xs font-bold hover:bg-slate-800 transition">🎬 Editor Video</button>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <div id="checkout-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
-        <div class="bg-slate-900 border border-slate-700 p-6 rounded-lg w-full max-w-md shadow-2xl">
-            <h2 class="text-xl font-bold text-white mb-4">Keranjang Anda</h2>
-            <div id="cart-items" class="space-y-2 mb-4 max-h-60 overflow-y-auto"></div>
-            <button onclick="toggleModal()" class="w-full bg-slate-700 text-white py-2 rounded text-sm font-bold">Tutup</button>
-            <button onclick="alert('Memproses pembayaran...')" class="w-full mt-2 bg-indigo-600 text-white py-2 rounded text-sm font-bold">Checkout</button>
         </div>
     </div>
 
     <script>
-        let cart = [];
-        let posts = [
-            { id: 1, user: "Sita_Design", status: "Hasil render AI, mantap!", likes: 12, comments: [] },
-            { id: 2, user: "Alex_Cinematic", status: "Kombinasi video loop.", likes: 45, comments: [] }
-        ];
-
-        function toggleModal() { document.getElementById('checkout-modal').classList.toggle('hidden'); }
-        
-        // FUNGSI AI GENERATOR DENGAN SIMULASI LOADING
-        function runTool(toolName) {
-            const prompt = document.getElementById('prompt-box').value;
-            if (!prompt) { alert("Masukkan prompt terlebih dahulu!"); return; }
+        async function sendPrompt() {
+            const prompt = document.getElementById('prompt').value;
+            const btn = document.getElementById('btn');
+            if(!prompt) return alert("Isi prompt dulu!");
             
-            const btn = event.target;
-            const originalText = btn.innerText;
             btn.innerText = "Processing...";
-            btn.disabled = true;
-
-            setTimeout(() => {
-                alert(`Berhasil! ${toolName} memproses: "${prompt}"`);
-                posts.unshift({ id: Date.now(), user: "AI Engine", status: `Hasil ${toolName}: ${prompt}`, likes: 0, comments: [] });
-                renderFeed();
-                btn.innerText = originalText;
-                btn.disabled = false;
-                document.getElementById('prompt-box').value = "";
-            }, 2000);
-        }
-
-        function renderFeed() {
-            const fc = document.getElementById('feed-container');
-            fc.innerHTML = posts.map(p => `
-                <div class="bg-slate-950 p-4 rounded border border-slate-800 space-y-3">
-                    <p class="text-xs font-bold text-white">${p.user}</p>
-                    <p class="text-xs text-slate-300">${p.status}</p>
-                    <div class="flex gap-4 border-t border-slate-800 pt-2">
-                        <button onclick="likePost(${p.id})" class="text-[10px] text-rose-400">❤️ ${p.likes}</button>
-                        <button onclick="addComment(${p.id})" class="text-[10px] text-sky-400">💬 ${p.comments.length}</button>
-                        <button onclick="alert('Link disalin!')" class="text-[10px] text-amber-400">🔗 Bagikan</button>
-                    </div>
+            const res = await fetch("/generate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ prompt: prompt })
+            });
+            const data = await res.json();
+            
+            const feed = document.getElementById('feed');
+            const div = document.createElement('div');
+            div.className = "bg-slate-900 p-4 rounded border border-slate-800";
+            div.innerHTML = `
+                <p class="text-xs font-bold text-indigo-300">FaceLife AI</p>
+                <p class="text-sm mt-1">${data.result}</p>
+                <div class="flex gap-4 mt-3 text-[10px] text-slate-500">
+                    <button onclick="this.innerText='Liked!'">❤️ Like</button>
+                    <button>💬 Komentar</button>
                 </div>
-            `).join('');
+            `;
+            feed.prepend(div);
+            btn.innerText = "Generate Post";
         }
-
-        function likePost(id) { posts.find(p => p.id === id).likes++; renderFeed(); }
-        function addComment(id) { const txt = prompt("Komentar:"); if(txt) { posts.find(p => p.id === id).comments.push(txt); renderFeed(); } }
-        function uploadMedia(input) { if(input.files[0]) { posts.unshift({ id: Date.now(), user: "Anda", status: "Mengunggah: " + input.files[0].name, likes: 0, comments: [] }); renderFeed(); } }
-
-        function renderMarket() {
-            const mc = document.getElementById('market-container');
-            const items = [{ name: "Mouse Gaming G502", price: "Rp 850.000" }, { name: "Keyboard RGB", price: "Rp 1.200.000" }];
-            mc.innerHTML = items.map(p => `
-                <div class="bg-slate-950 p-3 rounded border border-slate-800">
-                    <p class="text-xs font-bold text-white">${p.name}</p>
-                    <div class="flex justify-between items-center mt-2">
-                        <span class="text-emerald-500 font-bold text-xs">${p.price}</span>
-                        <button onclick="addToCart('${p.name}', '${p.price}')" class="bg-emerald-600 text-[10px] px-2 py-1 rounded font-bold">+ Keranjang</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            document.getElementById('cart-items').innerHTML = cart.map(i => `<div class="flex justify-between text-xs text-slate-300">${i.name} <span>${i.price}</span></div>`).join('');
-            toggleModal();
-        }
-
-        window.onload = () => { renderFeed(); renderMarket(); };
     </script>
 </body>
 </html>
